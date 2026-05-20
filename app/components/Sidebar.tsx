@@ -7,7 +7,7 @@ import {
   LayoutDashboard,
   MessageCircle,
   Users,
-  Sparkles,
+  ClipboardCheck,
   Mountain,
 } from "lucide-react";
 
@@ -15,7 +15,7 @@ const navItems = [
   { href: "/", label: "대시보드", icon: LayoutDashboard },
   { href: "/chat", label: "AI 챗봇", icon: MessageCircle },
   { href: "/admin", label: "관리자", icon: Users },
-  { href: "/demo", label: "SaaS 데모", icon: Sparkles },
+  { href: "/demo", label: "현장 운영 도구", icon: ClipboardCheck },
 ];
 
 export default function Sidebar() {

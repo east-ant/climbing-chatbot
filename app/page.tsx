@@ -5,15 +5,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   MessageCircle,
-  Users,
   Clock,
   MapPin,
   CreditCard,
-  Sparkles,
   AlertTriangle,
-  TrendingUp,
   Mountain,
-  ScanLine,
   HelpCircle,
   Megaphone,
   Footprints,
@@ -56,37 +52,6 @@ const fadeInUp = {
     transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
   }),
 };
-
-const features = [
-  {
-    icon: MessageCircle,
-    title: "AI 챗봇",
-    desc: "궁금한 점을 AI에게 질문해 보세요",
-    href: "/chat",
-    color: "from-brand-500 to-brand-700",
-  },
-  {
-    icon: Users,
-    title: "회원 관리",
-    desc: "회원·결제·만료 데이터 조회",
-    href: "/admin",
-    color: "from-blue-500 to-blue-700",
-  },
-  {
-    icon: Sparkles,
-    title: "SaaS 기능",
-    desc: "음성·번역·OCR 데모",
-    href: "/demo",
-    color: "from-purple-500 to-purple-700",
-  },
-  {
-    icon: TrendingUp,
-    title: "센터 정보",
-    desc: "운영시간·가격·지점 안내",
-    href: "/admin",
-    color: "from-amber-500 to-amber-700",
-  },
-];
 
 const beginnerFaqs = [
   {
@@ -205,14 +170,8 @@ export default function DashboardPage() {
             <p className="text-text-secondary text-sm leading-relaxed max-w-2xl">
               클라이밍이 처음이신가요? 걱정 마세요! ClimbMate AI가 운영시간, 준비물,
               초보자 추천 코스, 강습 일정까지 친절하게 안내해 드립니다.
-              AI + RAG + SaaS 기술을 활용한 지능형 고객 센터 솔루션입니다.
+              현재 데모 환경에서는 연결된 서버가 없을 때 샘플 FAQ 데이터로 안전하게 응답합니다.
             </p>
-            <div className="flex items-center gap-3 mt-4 flex-wrap">
-              <span className="badge badge-success">RAG 검색</span>
-              <span className="badge badge-info">로컬 LLM</span>
-              <span className="badge badge-warning">PostgreSQL</span>
-              <span className="badge badge-danger">NCP 배포</span>
-            </div>
           </div>
           <Link
             href="/chat"
@@ -299,8 +258,8 @@ export default function DashboardPage() {
           },
           {
             icon: CreditCard,
-            label: "SaaS 기능",
-            value: "4종",
+            label: "운영 도구",
+            value: "OCR",
             color: "text-purple-400",
             bgColor: "from-purple-500/10 to-purple-600/5",
           },
@@ -441,107 +400,6 @@ export default function DashboardPage() {
         </motion.div>
       </div>
 
-      {/* Feature Cards */}
-      <motion.h3
-        custom={8}
-        variants={fadeInUp}
-        initial="hidden"
-        animate="visible"
-        className="font-semibold text-text-primary mb-4 flex items-center gap-2"
-      >
-        <Sparkles className="w-4 h-4 text-brand-400" />
-        주요 기능
-      </motion.h3>
-
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {features.map((feat, i) => (
-          <motion.div
-            key={feat.title}
-            custom={i + 9}
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-          >
-            <Link href={feat.href}>
-              <div className="glass-card p-5 group cursor-pointer hover:scale-[1.02] transition-transform">
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feat.color} flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-shadow`}
-                >
-                  <feat.icon className="w-6 h-6 text-white" />
-                </div>
-                <h4 className="font-semibold text-text-primary mb-1 text-sm">
-                  {feat.title}
-                </h4>
-                <p className="text-xs text-text-muted">{feat.desc}</p>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Architecture Diagram */}
-      <motion.div
-        custom={13}
-        variants={fadeInUp}
-        initial="hidden"
-        animate="visible"
-        className="glass-card accent-border p-6"
-      >
-        <h3 className="font-semibold text-text-primary mb-4 flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-brand-400" />
-          시스템 아키텍처
-        </h3>
-        <div className="flex items-center justify-center gap-3 py-4 flex-wrap">
-          {[
-            {
-              icon: Users,
-              label: "사용자",
-              color: "from-blue-500 to-blue-600",
-            },
-            {
-              icon: Mountain,
-              label: "Next.js UI",
-              color: "from-brand-500 to-brand-600",
-            },
-            {
-              icon: MessageCircle,
-              label: "API Route",
-              color: "from-teal-500 to-teal-600",
-            },
-            {
-              icon: ScanLine,
-              label: "RAG 서버",
-              color: "from-purple-500 to-purple-600",
-            },
-            {
-              icon: CreditCard,
-              label: "PostgreSQL",
-              color: "from-amber-500 to-amber-600",
-            },
-            {
-              icon: Sparkles,
-              label: "로컬 LLM",
-              color: "from-rose-500 to-rose-600",
-            },
-          ].map((item, i, arr) => (
-            <div key={item.label} className="flex items-center gap-3">
-              <div className="flex flex-col items-center gap-1">
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}
-                >
-                  <item.icon className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-[11px] text-text-muted font-medium">
-                  {item.label}
-                </span>
-              </div>
-              {i < arr.length - 1 && (
-                <span className="text-text-muted text-lg mb-4">→</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </motion.div>
     </div>
   );
 }

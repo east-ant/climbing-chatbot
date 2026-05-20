@@ -6,14 +6,10 @@ import {
   Send,
   Mountain,
   User,
-  Mic,
-  Volume2,
-  Languages,
   BookOpen,
   Loader2,
   X,
   MapPin,
-  Clock,
   Footprints,
   ShieldCheck,
   CreditCard,
@@ -99,6 +95,10 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  function createMessageId(prefix: string) {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -107,7 +107,7 @@ export default function ChatPage() {
     if (!text.trim() || isLoading) return;
 
     const userMsg: Message = {
-      id: `user-${Date.now()}`,
+      id: createMessageId("user"),
       role: "user",
       content: text.trim(),
       timestamp: new Date(),
@@ -127,7 +127,7 @@ export default function ChatPage() {
       const data = await res.json();
 
       const botMsg: Message = {
-        id: `bot-${Date.now()}`,
+        id: createMessageId("bot"),
         role: "bot",
         content: data.answer || "죄송합니다, 응답을 생성하지 못했습니다.",
         sources: data.sources || [],
@@ -139,7 +139,7 @@ export default function ChatPage() {
       setMessages((prev) => [
         ...prev,
         {
-          id: `error-${Date.now()}`,
+          id: createMessageId("error"),
           role: "bot",
           content:
             "네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요. 🙏",
@@ -150,61 +150,6 @@ export default function ChatPage() {
     } finally {
       setIsLoading(false);
       inputRef.current?.focus();
-    }
-  }
-
-  async function handleVoiceInput() {
-    setIsLoading(true);
-    try {
-      const res = await fetch("/api/voice", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "stt" }),
-      });
-      const data = await res.json();
-      if (data.success && data.text) {
-        setInput(data.text);
-      }
-    } catch {
-      // 무시
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function handleTts(text: string) {
-    try {
-      const res = await fetch("/api/voice", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "tts", text }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        alert(
-          `🔊 음성 출력 (데모)\n\n"${text}"\n\n예상 길이: ${data.duration}`
-        );
-      }
-    } catch {
-      // 무시
-    }
-  }
-
-  async function handleTranslate(text: string) {
-    try {
-      const res = await fetch("/api/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, targetLang: "en" }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        alert(
-          `🌐 번역 결과 (${data.targetLangName})\n\n원문: ${data.original}\n번역: ${data.translated}`
-        );
-      }
-    } catch {
-      // 무시
     }
   }
 
@@ -270,20 +215,6 @@ export default function ChatPage() {
                             참고 자료 {msg.sources.length}건
                           </button>
                         )}
-                        <button
-                          onClick={() => handleTts(msg.content)}
-                          className="flex items-center gap-1 text-[11px] text-text-muted hover:text-text-secondary transition-colors"
-                        >
-                          <Volume2 className="w-3 h-3" />
-                          읽기
-                        </button>
-                        <button
-                          onClick={() => handleTranslate(msg.content)}
-                          className="flex items-center gap-1 text-[11px] text-text-muted hover:text-text-secondary transition-colors"
-                        >
-                          <Languages className="w-3 h-3" />
-                          번역
-                        </button>
                       </div>
                     )}
 
@@ -345,7 +276,7 @@ export default function ChatPage() {
                         <button
                           key={q}
                           onClick={() => sendMessage(q)}
-                          className={`px-3 py-1 rounded-full text-xs border ${cat.color} transition-all`}
+                          className="example-question-btn px-3 py-1 rounded-full text-xs border transition-all"
                         >
                           {q}
                         </button>
@@ -360,15 +291,6 @@ export default function ChatPage() {
           {/* Input Area */}
           <div className="p-4 border-t border-surface-border/20">
             <div className="flex items-center gap-2">
-              <button
-                onClick={handleVoiceInput}
-                disabled={isLoading}
-                className="w-10 h-10 rounded-xl bg-surface-light border border-surface-border/30 flex items-center justify-center text-text-muted hover:text-brand-400 hover:border-brand-500/30 transition-all disabled:opacity-50"
-                title="음성 입력 (데모)"
-              >
-                <Mic className="w-4 h-4" />
-              </button>
-
               <div className="flex-1 relative">
                 <input
                   ref={inputRef}

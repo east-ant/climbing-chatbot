@@ -1,17 +1,15 @@
 # 🧗 ClimbMate AI — 클라이밍 센터 AI 고객 응대 챗봇
 
-> AI + RAG + SaaS 활용 구조를 보여주는 NCP 교육용 데모 프로젝트
+> AI + RAG 구조를 보여주는 NCP 교육용 데모 프로젝트
 
 ## 📋 프로젝트 소개
 
-클라이밍 센터 고객 응대를 위한 AI 챗봇 데모입니다. 사용자 질문에 RAG 기반으로 답변하며, 음성 인식·번역·OCR 등 SaaS 기능 데모를 포함합니다.
+클라이밍 센터 고객 응대를 위한 AI 챗봇 데모입니다. 사용자 질문에 RAG 기반으로 답변하며, 첫 방문 고객 안내와 현장 회원 등록 보조 흐름을 포함합니다.
 
 ### 주요 기능
 - 🤖 **AI 챗봇** — RAG + LLM 기반 지능형 고객 응대
 - 📊 **관리자 대시보드** — 회원 정보, 지점 정보, 가격표 조회
-- 🎙️ **음성 입출력** — STT/TTS 데모
-- 🌐 **다국어 번역** — 외국인 고객 응대 데모
-- 📄 **OCR 회원등록** — 신분증 스캔 자동 등록 데모
+- 📄 **현장 운영 도구** — OCR 기반 첫 방문 회원 등록 보조
 
 ### 시스템 아키텍처
 ```
@@ -72,14 +70,12 @@ climbing-chatbot/
 │   ├── globals.css             # 디자인 시스템
 │   ├── chat/page.tsx           # AI 챗봇 페이지
 │   ├── admin/page.tsx          # 관리자 데이터 페이지
-│   ├── demo/page.tsx           # SaaS 기능 데모 페이지
+│   ├── demo/page.tsx           # 현장 운영 도구 페이지
 │   ├── api/
 │   │   ├── chat/route.ts       # 챗봇 대화 API
 │   │   ├── members/route.ts    # 회원 정보 API
 │   │   ├── gym-info/route.ts   # 센터 정보 API
-│   │   ├── ocr/route.ts        # OCR 데모 API
-│   │   ├── translate/route.ts  # 번역 데모 API
-│   │   └── voice/route.ts      # 음성 데모 API
+│   │   └── ocr/route.ts        # OCR 회원등록 API
 │   └── components/
 │       └── Sidebar.tsx         # 사이드바 네비게이션
 ├── lib/
@@ -97,9 +93,7 @@ climbing-chatbot/
 | POST | `/api/chat` | 챗봇 대화 (RAG → LLM → 응답) |
 | GET | `/api/members` | 회원 목록 조회 |
 | GET | `/api/gym-info` | 센터 정보 + 가격표 조회 |
-| POST | `/api/ocr` | OCR 회원등록 (데모) |
-| POST | `/api/translate` | 번역 (데모) |
-| POST | `/api/voice` | 음성 STT/TTS (데모) |
+| POST | `/api/ocr` | OCR 회원등록 보조 |
 
 ## 🗄️ DB 테이블
 

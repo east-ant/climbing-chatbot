@@ -7,7 +7,6 @@ import {
   MapPin,
   Clock,
   Phone,
-  CreditCard,
   AlertTriangle,
   CheckCircle2,
   XCircle,
@@ -543,7 +542,7 @@ export default function AdminPage() {
               key={price.id}
               className={`p-5 rounded-xl border transition-all ${
                 i === prices.length - 1
-                  ? "bg-gradient-to-b from-brand-500/10 to-brand-600/5 border-brand-500/20"
+                  ? "bg-white border-brand-500/60"
                   : "bg-surface/50 border-surface-border/20"
               }`}
             >
