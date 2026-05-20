@@ -64,7 +64,6 @@ function parseOcrText(ocr: OcrResponse) {
     phone: phone || "OCR 추출 연락처 확인 필요",
     birthDate: birthDate || "OCR 추출 생년월일 확인 필요",
     address: textLines.slice(1, 4).join(" ") || "OCR 추출 주소 확인 필요",
-    rawText: fullText,
   };
 }
 
@@ -101,14 +100,10 @@ async function runClovaOcr(file: File) {
       signal: AbortSignal.timeout(20000),
     });
 
-    if (!res.ok) {
-      console.error("[CLOVA OCR] API error:", res.status, await res.text());
-      return null;
-    }
+    if (!res.ok) return null;
 
     return (await res.json()) as OcrResponse;
-  } catch (error) {
-    console.error("[CLOVA OCR] Request error:", error);
+  } catch {
     return null;
   }
 }
@@ -139,15 +134,12 @@ export async function POST(request: NextRequest) {
           birthDate: parsed.birthDate,
           address: parsed.address,
         },
-        rawOcrText: parsed.rawText,
-        rawOcrResponse: ocrResult,
         message: `${file.name} 파일을 CLOVA OCR로 분석했습니다. 추출값은 데모 등록 전 확인이 필요합니다.`,
       });
     }
 
     return NextResponse.json(buildMockResult(file));
-  } catch (error) {
-    console.error("[API/ocr] Error:", error);
+  } catch {
     return NextResponse.json(
       { error: "OCR 처리 중 오류가 발생했습니다.", success: false },
       { status: 500 }

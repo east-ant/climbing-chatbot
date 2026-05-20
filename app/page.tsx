@@ -105,8 +105,7 @@ export default function DashboardPage() {
         setExpiringMembers(expiring);
         setGyms(gymData.gyms || []);
         setNotices((noticesData.notices || []).slice(0, 3));
-      } catch (err) {
-        console.error("Dashboard data fetch error:", err);
+      } catch {
       } finally {
         setLoading(false);
       }

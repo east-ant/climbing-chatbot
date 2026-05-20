@@ -27,8 +27,7 @@ export async function GET() {
       source:
         gymsResult && gymsResult.rows.length > 0 ? "database" : "mock",
     });
-  } catch (error) {
-    console.error("[API/gym-info] Error:", error);
+  } catch {
     return NextResponse.json({
       gyms: mockGyms,
       prices: mockPrices,

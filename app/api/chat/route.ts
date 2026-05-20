@@ -50,8 +50,7 @@ export async function POST(request: NextRequest) {
     );
 
     return NextResponse.json(mockResponse);
-  } catch (error) {
-    console.error("[API/chat] Error:", error);
+  } catch {
     return NextResponse.json(
       {
         answer:

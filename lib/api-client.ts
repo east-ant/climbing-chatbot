@@ -30,8 +30,7 @@ export async function queryRag(
 
     if (!res.ok) return null;
     return await res.json();
-  } catch (err) {
-    console.error("[RAG] Query error:", err);
+  } catch {
     return null;
   }
 }
@@ -87,8 +86,7 @@ ${context}`,
     }
 
     return null;
-  } catch (err) {
-    console.error("[LLM] Query error:", err);
+  } catch {
     return null;
   }
 }

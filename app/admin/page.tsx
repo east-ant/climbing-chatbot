@@ -139,8 +139,7 @@ export default function AdminPage() {
         setLessons(lessonsData.lessons || []);
         setNotices(noticesData.notices || []);
         setDataSource(membersData.source || "mock");
-      } catch (err) {
-        console.error("Admin data fetch error:", err);
+      } catch {
       } finally {
         setLoading(false);
       }

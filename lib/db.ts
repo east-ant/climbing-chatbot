@@ -20,8 +20,7 @@ function getPool(): Pool | null {
       connectionTimeoutMillis: 5000,
     });
 
-    pool.on("error", (err) => {
-      console.error("[DB] Unexpected pool error:", err);
+    pool.on("error", () => {
       pool = null;
     });
   }
@@ -41,23 +40,7 @@ export async function query<T extends QueryResultRow>(
 
   try {
     return await p.query<T>(text, params);
-  } catch (err) {
-    console.error("[DB] Query error:", err);
-    return null;
-  }
-}
-
-/**
- * DB 연결 테스트
- */
-export async function testConnection(): Promise<boolean> {
-  const p = getPool();
-  if (!p) return false;
-
-  try {
-    await p.query("SELECT 1");
-    return true;
   } catch {
-    return false;
+    return null;
   }
 }

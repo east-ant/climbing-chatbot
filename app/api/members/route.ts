@@ -17,8 +17,7 @@ export async function GET() {
 
     // DB 미연결 → mock data
     return NextResponse.json({ members: mockMembers, source: "mock" });
-  } catch (error) {
-    console.error("[API/members] Error:", error);
+  } catch {
     return NextResponse.json({ members: mockMembers, source: "mock" });
   }
 }

@@ -15,8 +15,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ lessons: mockLessons, source: "mock" });
-  } catch (error) {
-    console.error("[API/lessons] Error:", error);
+  } catch {
     return NextResponse.json({ lessons: mockLessons, source: "mock" });
   }
 }
